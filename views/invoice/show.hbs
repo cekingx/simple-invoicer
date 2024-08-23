@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{> partials/head}}
+  <body>
+    <div class="flex flex-row justify-center">
+      <div class="flex flex-col max-w-screen-sm w-full h-dvh">
+        <div class="container">
+          <div class="flex flex-row justify-center">
+            <h1 class="font-bold text-2xl">Invoice</h1>
+          </div>
+          <div class="flex flex-row mb-5">
+            <div class="flex flex-row flex-grow">
+              <div class="flex flex-col flex-grow">
+                <h1 class="font-bold">Company</h1>
+                {{{ companyInfo }}}
+              </div>
+            </div>
+            <div class="flex flex-col flex-grow justify-end text-end">
+              <div>
+                <p>Invoice Number</p>
+                <p class="font-bold">{{ invoiceNumber }}</p>
+              </div>
+              <div>
+                <p>Invoice Date</p>
+                <p class="font-bold">{{ invoiceDate }}</p>
+              </div>
+              <div>
+                <p>Invoice Deadline</p>
+                <p class="font-bold">{{ invoiceDeadline }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-row justify-end mb-5">
+            <div class="flex flex-col text-end">
+              <h1 class="font-bold">Customer</h1>
+              {{{ customerInfo }}}
+            </div>
+          </div>
+          <div class="flex flex-row mb-5">
+            <table class="table-auto flex-grow border border-collapse border-black">
+              <thead>
+                <tr>
+                  <th class="border border-black">Product</th>
+                  <th class="border border-black">Description</th>
+                  <th class="border border-black">Quantity</th>
+                  <th class="border border-black">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each products}}
+                <tr>
+                  <td class="border border-black">{{ name }}</td>
+                  <td class="border border-black">{{ description }}</td>
+                  <td class="border border-black text-end">{{ quantity }}</td>
+                  <td class="border border-black text-end">{{ price }}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+          <div class="flex flex-row justify-end">
+            <div class="text-end">
+              <p>Grand Total</p>
+              <p class="font-bold">{{ total }}</p>
+            </div>
+          </div>
+          <div class="flex flex-row">
+            <div>
+              <h1 class="font-bold">Note</h1>
+              {{{ note }}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

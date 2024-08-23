@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  {{> partials/head}}
+  <body>
+    <script src="https://cdn.tiny.cloud/1/d7azxkvknquchxctaa2irhkdxt6zqco7bxdq7soa1gowdbxm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <div class="flex flex-row justify-center">
+      <div class="flex flex-col max-w-screen-sm w-full h-dvh">
+        <div class="container">
+          <h1 class="font-bold">Create Invoice</h1>
+
+          <form action="/invoice" method="POST" class="flex flex-col">
+            <label for="invoice-number">Invoice Number</label>
+            <input type="text" class="border border-black mb-2" name="invoice-number" id="invoice-number" value="INV/2024/0001">
+
+            <label for="invoice-date">Invoice Date</label>
+            <input type="date" class="border border-black mb-2" name="invoice-date", id="invoice-date">
+
+            <label for="invoice-deadline">Invoice Deadline</label>
+            <input type="date" class="border border-black mb-2" name="invoice-deadline", id="invoice-deadline">
+
+            <label for="company-info">Company Info</label>
+            <textarea name="company-info" id="company-info" class="mb-2">
+              <p>Company Name</p>
+              <p>Gedung Garuda 2nd Floor</p>
+              <p>Badung, Bali, 80771</p>
+              <p>NPWP: 1234567890</p>
+            </textarea>
+
+            <label for="customer-info">Customer Info</label>
+            <textarea name="customer-info" id="costomer-info" class="mb-2">
+              <p>Customer Name</p>
+              <p>Jalan Raya Kuta No. 1</p>
+              <p>Badung, Bali, 80771</p>
+            </textarea>
+
+            <label for="product">Product</label>
+            <textarea name="product" id="product" class="mb-2">
+              { "products": [ 
+                { "name": "service 1", "description": "service description 1", "quantity": 3, "price": 1000 },
+                { "name": "service 2", "description": "service description 2", "quantity": 1, "price": 4000 }
+              ] }
+            </textarea>
+
+            <label for="note">Note</label>
+            <textarea name="note" id="note">
+              Payment to: 
+            </textarea>
+
+            <button type="submit" class="bg-black text-white rounded p-2">Create Invoice</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  <script>
+    tinymce.init({
+      selector: '#product',
+      plugins: 'code',
+      toolbar: 'code',
+    });
+    tinymce.init({
+      selector: 'textarea',
+    });
+  </script>
+  </body>
+</html>
