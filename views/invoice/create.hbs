@@ -8,15 +8,15 @@
         <div class="container">
           <h1 class="font-bold">Create Invoice</h1>
 
-          <form action="/invoice" method="POST" class="flex flex-col">
+          <form action="/invoice" method="post" class="flex flex-col">
             <label for="invoice-number">Invoice Number</label>
             <input type="text" class="border border-black mb-2" name="invoice-number" id="invoice-number" value="INV/2024/0001">
 
             <label for="invoice-date">Invoice Date</label>
-            <input type="date" class="border border-black mb-2" name="invoice-date", id="invoice-date">
+            <input type="date" value="{{ todayDate }}" class="border border-black mb-2" name="invoice-date", id="invoice-date">
 
             <label for="invoice-deadline">Invoice Deadline</label>
-            <input type="date" class="border border-black mb-2" name="invoice-deadline", id="invoice-deadline">
+            <input type="date" value="{{ tomorrowDate }}" class="border border-black mb-2" name="invoice-deadline", id="invoice-deadline">
 
             <label for="company-info">Company Info</label>
             <textarea name="company-info" id="company-info" class="mb-2">
@@ -34,12 +34,36 @@
             </textarea>
 
             <label for="product">Product</label>
-            <textarea name="product" id="product" class="mb-2">
-              { "products": [ 
-                { "name": "service 1", "description": "service description 1", "quantity": 3, "price": 1000 },
-                { "name": "service 2", "description": "service description 2", "quantity": 1, "price": 4000 }
-              ] }
-            </textarea>
+            <table class="border border-collapse mb-2 max-w-full">
+              <thead class="border border-black bg-black text-white">
+                <tr>
+                  <td class="border border-black bg-black text-white">Name</td>
+                  <td class="border border-black bg-black text-white">Description</td>
+                  <td class="border border-black bg-black text-white">Quantity</td>
+                  <td class="border border-black bg-black text-white">Price</td>
+                  <td class="border border-black bg-black text-white">Action</td>
+                </tr>
+              </thead>
+              <tbody class="border border-black">
+                <tr>
+                  <td>
+                    <input type="text" placeholder="Name" name="item-name">
+                  </td>
+                  <td>
+                    <input type="text" placeholder="Description" name="item-description">
+                  </td>
+                  <td>
+                    <input type="number" placeholder="Quantity" name="item-quantity">
+                  </td>
+                  <td>
+                    <input type="number" placeholder="Price" name="item-price">
+                  </td>
+                  <td>
+                    <button hx-post="/invoice/save-product-item" hx-target="closest tbody" class="button bg-black text-white">Add</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
             <label for="note">Note</label>
             <textarea name="note" id="note">
@@ -54,12 +78,8 @@
 
   <script>
     tinymce.init({
-      selector: '#product',
-      plugins: 'code',
-      toolbar: 'code',
-    });
-    tinymce.init({
       selector: 'textarea',
+      height: 300
     });
   </script>
   </body>
