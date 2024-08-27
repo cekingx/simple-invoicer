@@ -3,7 +3,7 @@ FROM node:18.19.0 AS builder
 
 WORKDIR /usr/app
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN corepack enable
 
