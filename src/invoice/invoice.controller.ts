@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Render } from '@nestjs/common';
 
-@Controller('invoice')
+@Controller('')
 export class InvoiceController {
-  @Get('/create')
+  @Get('')
   @Render('invoice/create')
   createInvoiceView() {
     const today = new Date();
@@ -101,7 +101,7 @@ export class InvoiceController {
           <td class="border border-black">
             <div class="container flex flex-row justify-center">
               <button
-                hx-post="/invoice/delete-product-item/${index}"
+                hx-post="/delete-product-item/${index}"
                 hx-target="closest tbody"
                 class="border border-black p-1 rounded m-1"
               >Delete</button>
@@ -127,7 +127,7 @@ export class InvoiceController {
         </td>
         <td class="flex flex-row justify-center">
           <button
-            hx-post="/invoice/save-product-item"
+            hx-post="/save-product-item"
             hx-target="closest tbody"
             class="button border border-black p-1 rounded m-1"
           >Add</button>
