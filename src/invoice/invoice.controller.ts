@@ -27,6 +27,16 @@ export class InvoiceController {
     const products = body['items'] || [];
     const total = products.reduce((acc: number, product: any) => acc + (product.quantity * product.price), 0);
     const note = body['note'];
+
+    const formattedProducts = products.map((product: any) => {
+      return {
+        name: product.name,
+        description: product.description,
+        quantity: product.quantity,
+        price: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.price),
+      }
+    });
+
     return {
       invoiceNumber,
       invoiceDate,
@@ -34,8 +44,8 @@ export class InvoiceController {
       companyInfo,
       customerInfo,
       note,
-      products,
-      total,
+      products: formattedProducts,
+      total: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(total),
     }
   }
 
@@ -60,7 +70,6 @@ export class InvoiceController {
 
   @Post('delete-product-item/:index')
   deleteProductItem(@Body() body: any, @Param() param: any) {
-    console.log('body', body);
     const products: {
       name: string;
       description: string;
@@ -77,20 +86,26 @@ export class InvoiceController {
     const formattedProducts = products.map((product, index) => {
       return /*html*/`
         <tr>
-          <td>
-            <input type="text" value="${product.name}" name="items[${index+1}][name]" readonly>
+          <td class="border border-black">
+            <input type="text" class="w-full p-1" value="${product.name}" name="items[${index+1}][name]" readonly>
           </td>
-          <td>
-            <input type="text" value="${product.description}" name="items[${index+1}][description]" readonly>
+          <td class="border border-black">
+            <input type="text" class="w-full p-1" value="${product.description}" name="items[${index+1}][description]" readonly>
           </td>
-          <td>
-            <input type="text" value="${product.quantity}" name="items[${index+1}][quantity]" readonly>
+          <td class="border border-black">
+            <input type="text" class="w-full p-1" value="${product.quantity}" name="items[${index+1}][quantity]" readonly>
           </td>
-          <td>
-            <input type="text" value="${product.price}" name="items[${index+1}][price]" readonly>
+          <td class="border border-black">
+            <input type="text" class="w-full p-1" value="${product.price}" name="items[${index+1}][price]" readonly>
           </td>
-          <td>
-            <button hx-post="/invoice/delete-product-item/${index}" hx-target="closest tbody" class="button bg-black text-white">Delete</button>
+          <td class="border border-black">
+            <div class="container flex flex-row justify-center">
+              <button
+                hx-post="/invoice/delete-product-item/${index}"
+                hx-target="closest tbody"
+                class="border border-black p-1 rounded m-1"
+              >Delete</button>
+            </div>
           </td>
         </tr>
       `;
@@ -99,19 +114,23 @@ export class InvoiceController {
     formattedProducts.push(/*html*/`
       <tr>
         <td>
-          <input type="text" placeholder="Name" name="item-name">
+          <input type="text" placeholder="Name" name="item-name" class="w-full p-1 border border-gray-700 rounded">
         </td>
         <td>
-          <input type="text" placeholder="Description" name="item-description">
+          <input type="text" placeholder="Description" name="item-description" class="w-full p-1 border border-gray-700 rounded">
         </td>
         <td>
-          <input type="number" placeholder="Quantity" name="item-quantity">
+          <input type="number" placeholder="Quantity" name="item-quantity" class="w-full p-1 border border-gray-700 rounded">
         </td>
         <td>
-          <input type="number" placeholder="Price" name="item-price">
+          <input type="number" placeholder="Price" name="item-price" class="w-full p-1 border border-gray-700 rounded">
         </td>
-        <td>
-          <button hx-post="/invoice/save-product-item" hx-target="closest tbody" class="button bg-black text-white">Add</button>
+        <td class="flex flex-row justify-center">
+          <button
+            hx-post="/invoice/save-product-item"
+            hx-target="closest tbody"
+            class="button border border-black p-1 rounded m-1"
+          >Add</button>
         </td>
       </tr>
     `);
